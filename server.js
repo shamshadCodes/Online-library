@@ -8,7 +8,8 @@ const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser')
 
 const indexRouter = require('./routes/index');
-const authorRouter = require('./routes/authors')
+const authorRouter = require('./routes/authors');
+const bookRouter = require('./routes/books');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views'); //__dirname refers to the current directory
@@ -21,7 +22,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 
 const mongoose = require('mongoose')
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
 
 //Show error
@@ -32,6 +33,7 @@ db.once('open', () => console.log("Connected to Mongoose"))
 
 app.use('/', indexRouter)
 app.use('/authors', authorRouter)
+app.use('/books', bookRouter)
 
 //listen on process.env.PORT or default to 3000
 app.listen(process.env.PORT || 3000)
