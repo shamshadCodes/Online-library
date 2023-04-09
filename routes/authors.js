@@ -4,8 +4,15 @@ const Author = require('../models/author')
 
 //All Authors router
 router.get('/', async (req, res) => {
+    let searchOptions = {}
+
+    //We use req.query instead of req.body because form submits with GET are sent via req.query and POST uses req.body
+    if (req.query.name != null && req.query.name !== '') {
+        searchOptions.name = new RegExp(req.query.name, 'i');
+    }
+
     try {
-        const authorList = await Author.find({})
+        const authorList = await Author.find(searchOptions)
         res.render('authors/index', { authors: authorList })
     } catch {
         res.redirect('/')
