@@ -3,11 +3,16 @@ const router = express.Router();
 const Author = require('../models/author')
 
 //All Authors router
-router.get('/', (req, res) => {
-    res.render('authors/index')
+router.get('/', async (req, res) => {
+    try {
+        const authorList = await Author.find({})
+        res.render('authors/index', { authors: authorList })
+    } catch {
+        res.redirect('/')
+    }
 })
 
-//Add new Author page
+//Add new Author page 
 router.get('/new', (req, res) => {
     //passing variables to the ejs file at views/authors/new
     res.render('authors/new', { author: new Author() })
@@ -21,8 +26,8 @@ router.post('/', async (req, res) => {
 
     try {
         const newAuthor = await author.save()
-        // res.render(`authors/${newAuthor}`)
-        res.render('authors')
+        // res.redirect(`authors/${newAuthor}`)
+        res.redirect('authors')
     } catch {
         res.render('authors/new', {
             author: author,
