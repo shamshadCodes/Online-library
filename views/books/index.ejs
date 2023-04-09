@@ -7,7 +7,7 @@
   <div>
     <label>Published After</label>
     <input
-      type="text"
+      type="date"
       name="publishedAfter"
       value="<%= searchOptions.publishedAfter %>"
     />
@@ -15,7 +15,7 @@
   <div>
     <label>Published Before</label>
     <input
-      type="text"
+      type="date"
       name="publishedBefore"
       value="<%= searchOptions.publishedBefore %>"
     />
@@ -25,7 +25,6 @@
 <br />
 <div>
   <% books.forEach((book) => { %>
-  <img height="150" width="100" src="<% book.coverImagePath%>" />
-  <div><%= book.name %></div>
-  <% }) %>
+  <img height="150" width="100" src="<%= book.coverImagePath%>" />
+  <%= book.name %> <% }) %>
 </div>

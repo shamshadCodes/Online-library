@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const multer = require('multer'); //middleware used to handle multipart requests, which usually includes uploading files
+const path = require('path'); //helps in working with file and directoty paths
+const fs = require('fs'); //file system interaction; used here to unlink(delete) cover images when saving fails
 const Author = require('../models/author');
 const Book = require('../models/book');
-const uploadPath = path.join('public', Book.coverImageBasePath);
-const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
+
+const uploadPath = path.join('public', Book.coverImageBasePath); //Creating an upload path for every book item
+const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'] //Specifying the acceptable file types
 const upload = multer({
     dest: uploadPath,
     fileFilter: (req, file, callback) => {
@@ -16,6 +17,8 @@ const upload = multer({
 
 //All Books router
 router.get('/', async (req, res) => {
+
+    //Building a query to incorporate title, publishedBefore and publishedAfter
     let query = Book.find()
     if (req.query.title != null && req.query.title != '') {
         query = query.regex('title', new RegExp(req.query.title, 'i'))
@@ -28,6 +31,7 @@ router.get('/', async (req, res) => {
     if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
         query = query.gte('publishDate', req.query.publishedAfter)
     }
+
     try {
         const books = await query.exec()
         res.render('books/index', {
