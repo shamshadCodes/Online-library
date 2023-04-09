@@ -23,12 +23,22 @@
 <!-- Publish Date -->
 <div>
   <label>Publish Date</label>
-  <input type="date" name="publish-date" value="<% book.publishDate == null ? ''
+  <input type="date" name="publishDate" value="<% book.publishDate == null ? ''
   : book.publishDate.toISOString().split('T')[0]%>"
 </div>
 
 <!-- Page Count -->
 <div>
   <label>Page Count</label>
-  <input type="page-count" name="page-count" value="<%= book.pageCount %>" />
+  <input type="number" name="pageCount" min="1" value="<%= book.pageCount %>" />
 </div>
+
+<!-- Cover -->
+<div>
+  <label>Cover Image</label>
+  <input type="file" name="cover" />
+</div>
+
+<!-- Description -->
+<label>Description</label>
+<textarea name="description"><% book.description %></textarea>
