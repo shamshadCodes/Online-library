@@ -23,8 +23,12 @@
 <!-- Publish Date -->
 <div>
   <label>Publish Date</label>
-  <input type="date" name="publishDate" value="<% book.publishDate == null ? ''
+  <input
+    type="date"
+    name="publishDate"
+    value="<% book.publishDate == null ? ''
   : book.publishDate.toISOString().split('T')[0]%>"
+  />
 </div>
 
 <!-- Page Count -->
