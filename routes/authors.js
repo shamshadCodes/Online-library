@@ -67,7 +67,6 @@ router.get('/:id/edit', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     let author;
-    console.log(req.params, req.body)
 
     try {
         author = await Author.findById(req.params.id)
@@ -87,25 +86,25 @@ router.put('/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-    // let author
-    // try {
-    //     author = await Author.findById(req.params.id)
-    //     await author.remove()
-    //     res.redirect('/authors')
-    // } catch {
-    //     if (author == null) {
-    //         res.redirect('/')
-    //     } else {
-    //         res.redirect(`/authors/${author.id}`)
-    //     }
-    // }
+    let author
     try {
+        author = await Author.findById(req.params.id)
         await Author.deleteOne({ _id: req.params.id })
-        res.redirect(`/authors`)
-    } catch (err) {
-        console.log(err)
-        res.redirect(`/authors/${req.params.id}`)
+        res.redirect('/authors')
+    } catch {
+        if (author == null) {
+            res.redirect('/')
+        } else {
+            res.redirect(`/authors/${author.id}`)
+        }
     }
+    // try {
+    //     await Author.deleteOne({ _id: req.params.id })
+    //     res.redirect(`/authors`)
+    // } catch (err) {
+    //     console.log(err)
+    //     res.redirect(`/authors/${req.params.id}`)
+    // }
 })
 
 module.exports = router;
