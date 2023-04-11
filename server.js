@@ -38,4 +38,4 @@ app.use('/authors', authorRouter)
 app.use('/books', bookRouter)
 
 //listen on process.env.PORT or default to 3000
-app.listen(process.env.PORT)
+app.listen(process.env.PORT || 3000)
