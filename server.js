@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override') //helps the server call put and delete routes
 
 const indexRouter = require('./routes/index');
 const authorRouter = require('./routes/authors');
@@ -20,6 +21,7 @@ app.use(expressLayouts);
 app.use(express.static('public'))
 //Using bodyParser passing data in url; limit 10mb
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+app.use(methodOverride('_method'))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
@@ -36,4 +38,4 @@ app.use('/authors', authorRouter)
 app.use('/books', bookRouter)
 
 //listen on process.env.PORT or default to 3000
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT)
