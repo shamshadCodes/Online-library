@@ -23,8 +23,6 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 app.use(methodOverride('_method'))
 
-console.log(process.env.DATABASE_URL, typeof process.env.DATABASE_URL)
-
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
@@ -40,4 +38,4 @@ app.use('/authors', authorRouter)
 app.use('/books', bookRouter)
 
 //listen on process.env.PORT or default to 3000
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT)
